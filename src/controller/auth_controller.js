@@ -3,6 +3,7 @@ import userModel from "../model/user.js";
 import authValidation from "../util/auth_validation.js";
 import encrypt from "../util/secure_password.js";
 import generateToken from "../util/generate_token.js";
+import balanceModel from "../model/balance.js";
 
 const register = async (req, res) => {
   const username = req.body.username;
@@ -79,6 +80,14 @@ const register = async (req, res) => {
     });
 
     const user = await userModel.findOne({ username: username });
+
+    await balanceModel.create({
+      userId: user._id.toString(),
+      totalBalance: 0,
+      incomeBalance: 0,
+      outcomeBalance: 0,
+    });
+
     delete user._id;
 
     return res.status(201).json({
@@ -121,11 +130,16 @@ const login = async (req, res) => {
     username: username,
   });
 
-  delete validUser._id;
-
   res.status(200).json({
     message: "Login berhasil",
-    user: validUser,
+    user: {
+      id: validUser.id,
+      username: validUser.username,
+      email: validUser.email,
+      address: validUser.address,
+      urlImage: validUser.urlImage,
+      phone: validUser.phone,
+    },
     token: accessToken.accessToken,
   });
 };

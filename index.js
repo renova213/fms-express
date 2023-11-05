@@ -3,9 +3,7 @@ import cors from "cors";
 import corsMiddleware from "./src/middleware/cors.js";
 import notFoundMiddleware from "./src/middleware/not_found.js";
 import connectDB from "./src/config/connect.js";
-import authRoute from "./src/route/auth.js";
-import userRoute from "./src/route/user.js";
-import vehicleRoute from "./src/route/vehicle.js";
+import route from "./src/route/index.js";
 
 const app = express();
 
@@ -15,9 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("Fuel Management System Api"));
 
-app.use(authRoute);
-app.use(userRoute);
-app.use(vehicleRoute);
+app.use(route.authRoute);
+app.use(route.userRoute);
+app.use(route.vehicleRoute);
+app.use(route.balanceRoute);
 
 app.use(notFoundMiddleware);
 

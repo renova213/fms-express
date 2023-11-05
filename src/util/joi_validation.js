@@ -21,4 +21,14 @@ const vehicleValidation = (data) => {
   return schema.validate(data);
 };
 
-export default { updateUserData, vehicleValidation };
+const balanceValidation = (data) => {
+  const schema = joi.object({
+    totalBalance: joi.number().min(0),
+    incomeBalance: joi.number().min(0),
+    outcomeBalance: joi.number().min(0),
+  });
+
+  return schema.validate(data);
+};
+
+export default { updateUserData, vehicleValidation, balanceValidation };
