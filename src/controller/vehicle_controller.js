@@ -3,7 +3,7 @@ import joiValidation from "../util/joi_validation.js";
 
 const getVehicles = async (req, res) => {
   try {
-    let userId = req.body.userId;
+    let userId = req.params.userId;
 
     if (!userId) return res.status(400).json({ message: "userId kosong" });
 
