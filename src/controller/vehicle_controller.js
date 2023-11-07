@@ -16,7 +16,7 @@ const getVehicles = async (req, res) => {
       delete newVehicle.__v;
       return newVehicle;
     });
-    res.status(200).json({ data: vehicles });
+    res.status(200).json(vehicles);
   } catch (error) {
     res.status(500).json({ message: error });
   }
