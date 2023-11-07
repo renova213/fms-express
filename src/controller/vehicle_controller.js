@@ -4,19 +4,10 @@ import joiValidation from "../util/joi_validation.js";
 const getVehicles = async (req, res) => {
   try {
     let userId = req.params.userId;
-    let section = [];
 
     if (!userId) return res.status(400).json({ message: "userId kosong" });
 
     let vehicles = await vehicleModel.find({ userId: userId });
-
-    vehicles.forEach(vehicle => {
-      let vehicleType = vehicle.vehicleType;
-  
-      if (!section.includes(vehicleType)) {
-          section.push(vehicleType);
-      }
-  });
 
     vehicles = vehicles.map((user) => {
       const newVehicle = user.toObject();
@@ -26,9 +17,7 @@ const getVehicles = async (req, res) => {
       return newVehicle;
     });
 
-
-
-    res.status(200).json({"vehicle": vehicles, "section": section});
+    res.status(200).json(vehicles);
   } catch (error) {
     res.status(500).json({ message: error });
   }
