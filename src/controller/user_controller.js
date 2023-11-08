@@ -50,7 +50,7 @@ const getUser = async (req, res) => {
       delete newUser.__v;
       return newUser;
     });
-    res.status(200).json({ data: users });
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -75,7 +75,14 @@ const updateUserData = async (req, res) => {
         if (!data) {
           return res.status(404).json({ message: "id tidak ditemukan" });
         }
-        return res.status(200).json({ message: "Data user berhasil diubah" });
+        return res.status(200).json({
+          "id":data._id,
+          "username":data.username,
+          "email": data.email,
+          "address": data.address,
+          "urlImage": data.urlImage,
+          "phone": data.phone,
+        });
       });
   } catch (err) {
     res.status(500).json({ message: err });
