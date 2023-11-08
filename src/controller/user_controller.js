@@ -71,17 +71,19 @@ const updateUserData = async (req, res) => {
       .findByIdAndUpdate(id, req.body, {
         useFindAndModify: false,
       })
-      .then((data) => {
+      .then(async (data) => {
         if (!data) {
           return res.status(404).json({ message: "id tidak ditemukan" });
         }
+        const user = await userModel.findOne({ username: data.username });
+
         return res.status(200).json({
-          "id":data._id,
-          "username":data.username,
-          "email": data.email,
-          "address": data.address,
-          "urlImage": data.urlImage,
-          "phone": data.phone,
+          "id":user._id,
+          "username":user.username,
+          "email": user.email,
+          "address": user.address,
+          "urlImage": user.urlImage,
+          "phone": user.phone,
         });
       });
   } catch (err) {
